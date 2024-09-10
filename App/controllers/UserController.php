@@ -1,7 +1,10 @@
 <?php
 use Core\DB;
+use Core\Sessions;
 class UserController{
     public function show($id){
+        $result = Sessions::get("user");
+        dd($result);
         $template = new Template();
         $template->set("title","User");
         $template->set("user_id",$id);
@@ -27,8 +30,11 @@ class UserController{
         // $result1 = DB::table("admins")->select()->where("email","LIKE","%@vw%")->get();
         // $result2 = DB::table("admins")->select()->where(["email","like","%@vw%"])->get();
         // $result3 = DB::table("admins")->select()->where([["email","like","%@vw%"]])->get();
-        $result = DB::table("admins")->select()->where([["email","like","%@vw%"],["username","=","Hayat Ali"],["password","=","abc123"]])->get();
+        // $result = DB::table("admins")->select()->where([["email","like","%@vw%"],["username","=","Hayat Ali"],["password","=","abc123"]])->get();
 
+
+        // $result = DB::table("users")->select()->leftJoin("accounts","users.id","accounts.user_id")->where("users.id",9)->get();
+        $result = Sessions::get("user");
         dd($result);
     }
 

@@ -33,6 +33,11 @@ class DB {
         return $this;
     }
 
+    public function leftJoin($joiningTable,$forignKey,$primaryKey){
+        $this->query .= " LEFT JOIN $joiningTable on $forignKey = $primaryKey ";
+        return $this;
+    }
+
     public function get($limit=null){
         if($limit && is_int($limit)){
             $this->query.=" limit $limit";
