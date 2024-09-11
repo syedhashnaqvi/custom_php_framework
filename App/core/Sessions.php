@@ -23,6 +23,11 @@ class Sessions {
         self::init();
         return isset($_SESSION[$key]) ? $_SESSION[$key] : NULL;
     }
+
+    public static function exists($key){
+        return isset($_SESSION[$key]);
+    }
+
 }
 
 // TASKS
