@@ -3,7 +3,7 @@
 
 <form action="/user/<?= $user_id; ?>" method="post">
     <input type="text" name="username">
-    <input type="email" name="email">
+    <input type="text" name="email">
     <input type="password" name="password">
     <input type="submit" value="Save">
 </form>

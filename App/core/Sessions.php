@@ -25,15 +25,35 @@ class Sessions {
     }
 
     public static function exists($key){
+        self::init();
         return isset($_SESSION[$key]);
+    }
+
+    public static function sessions($key = null){
+        self::init();
+        if($key){
+            var_dump(isset($_SESSION[$key]) ? $_SESSION[$key] :null);
+            return;
+        }
+        var_dump(isset($_SESSION));
+    }
+
+    public static function destroy($key=null){
+        self::init();
+        if($key){
+            unset($_SESSION[$key]);
+            return;
+        }
+        unset($_SESSION);
+    }
+
+    public static function message($msg,$type){
+        
     }
 
 }
 
-// TASKS
-// 1. Session Exists function to check if a session exists or not
-// returns true of false
-
-// 2. View Sessiong fucntion to display all sessions data or a specific key based data
-
-// 3. Destroy session function to destroy all sessions or just one with key provided
+// 1.Session ID function (return current session id)
+// 2.Messages (return msg based on type OR can return multple msgs)
+// 3.Errors (return signle error or multiple errors)
+// 4. Regenerate Session ID

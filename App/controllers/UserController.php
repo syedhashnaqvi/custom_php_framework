@@ -1,10 +1,9 @@
 <?php
 use Core\DB;
 use Core\Sessions;
+use Core\Validator;
 class UserController{
     public function show($id){
-        $result = Sessions::get("user");
-        dd($result);
         $template = new Template();
         $template->set("title","User");
         $template->set("user_id",$id);
@@ -14,7 +13,17 @@ class UserController{
 
     public function update($request,$id){
         $data = $request->all();
+        // $validationRules = [
+        //     "username" => "required",
+        //     "email" => "email",
+        // ];
+        // $isValid = Validator::validate($validationRules,$data);
 
+        $isValid = Validator::validate([
+            "username" => "required",
+            "email" => "required|email",
+        ],$data);
+        dd($isValid);
         // $result = DB::table("admins")->select("email")->orderBy("id","DESC")->get();
         // $result = DB::table("admins")->select()->find(6);
         // $result = DB::table("admins")->insert($data);
