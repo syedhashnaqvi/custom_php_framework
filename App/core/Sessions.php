@@ -51,6 +51,24 @@ class Sessions {
         
     }
 
+    public static function getSessionId(){
+        self::init();
+        return session_id();        
+    }
+
+    public static function setSessionMessage($key, $value) {
+        self::init();
+        if (!isset($_SESSION[$key])) {
+            $_SESSION[$key] = "No Session Key Set";
+        }else{
+            $_SESSION[$key] = $value;
+        }
+
+       
+    }
+    public static function getSessionMessage($key) {
+        return isset($_SESSION[$key]) ? $_SESSION[$key] : NULL;
+    }
 }
 
 // 1.Session ID function (return current session id)
