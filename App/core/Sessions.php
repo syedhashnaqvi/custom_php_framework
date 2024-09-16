@@ -51,27 +51,17 @@ class Sessions {
         
     }
 
-    public static function getSessionId(){
+    public static function sessionId(){
         self::init();
         return session_id();        
     }
 
-    public static function setSessionMessage($key, $value) {
-        self::init();
-        if (!isset($_SESSION[$key])) {
-            $_SESSION[$key] = "No Session Key Set";
-        }else{
-            $_SESSION[$key] = $value;
-        }
-
-       
+    public static function messages($key = null) {
+        $result = self::get("messages");
+        self::destroy("messages");
+        return $key ? (isset($result[$key]) ? $result[$key] : null):$result;
     }
-    public static function getSessionMessage($key) {
-        return isset($_SESSION[$key]) ? $_SESSION[$key] : NULL;
+    public static function setMessages($msg) {
+        self::set("messages",$msg);
     }
 }
-
-// 1.Session ID function (return current session id)
-// 2.Messages (return msg based on type OR can return multple msgs)
-// 3.Errors (return signle error or multiple errors)
-// 4. Regenerate Session ID

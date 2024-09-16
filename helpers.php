@@ -26,3 +26,20 @@ function __(...$vars){
         echo $var;
     }
 }
+
+function _print($arr,$key){
+    __(isset($arr[$key]) ? $arr[$key] : '');
+}
+
+function url($path=''){
+    return sprintf(
+      "%s://%s",
+      isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+      $_SERVER['HTTP_HOST'].$path
+    );
+}
+
+function redirect($path){
+    $url = url("/".$path);
+    header('Location:'.$url);
+}

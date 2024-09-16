@@ -21,9 +21,12 @@ class UserController{
 
         $isValid = Validator::validate([
             "username" => "required",
-            "email" => "required|email",
+            "email" => "email",
         ],$data);
-        dd($isValid);
+        if(!$isValid){
+            redirect("user/5");
+        }
+        dd("Valid");
         // $result = DB::table("admins")->select("email")->orderBy("id","DESC")->get();
         // $result = DB::table("admins")->select()->find(6);
         // $result = DB::table("admins")->insert($data);
