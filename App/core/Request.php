@@ -1,5 +1,6 @@
 <?php
 namespace Core;
+use Core\Sessions;
 class Request{
     private $queryData,$postData,$requestHeaders,$requestUri,$requestMethod;
 
@@ -9,6 +10,7 @@ class Request{
         $this->requestHeaders = getallheaders();
         $this->requestUri = $_SERVER["REQUEST_URI"];
         $this->requestMethod = $_SERVER["REQUEST_METHOD"];
+        if($this->requestMethod == "POST") Sessions::set("form_old_data",$_POST);
     }
 
     public function all(){

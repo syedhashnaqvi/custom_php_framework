@@ -1,4 +1,5 @@
 <?php
+use Core\Sessions;
 // Dump & Die function
 function dd(...$vars){
     echo "<pre style='background:#000000;color:#00FF00;font-size:16px;'>";
@@ -45,5 +46,6 @@ function redirect($path){
 }
 
 function old($key) {
-    echo isset($_SESSION['old'][$key]) ? $_SESSION['old'][$key] : '' ;
+    $formOldData = Sessions::get('form_old_data');
+    echo isset($formOldData[$key]) ? $formOldData[$key]:'';
 }
