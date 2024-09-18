@@ -43,3 +43,7 @@ function redirect($path){
     $url = url("/".$path);
     header('Location:'.$url);
 }
+
+function old($key) {
+    echo isset($_SESSION['old'][$key]) ? $_SESSION['old'][$key] : '' ;
+}

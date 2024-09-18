@@ -56,6 +56,11 @@ class Sessions {
         return session_id();        
     }
 
+    public static function regenerateId(){
+        session_regenerate_id();
+        return session_id();
+    }
+
     public static function messages($key = null) {
         $result = self::get("messages");
         self::destroy("messages");

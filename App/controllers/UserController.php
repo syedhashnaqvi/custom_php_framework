@@ -23,9 +23,22 @@ class UserController{
             "username" => "required",
             "email" => "email",
         ],$data);
+        // Sessions::set('old',$data); // if we want to keep old data even throughtout the execution
         if(!$isValid){
+            // $_SESSION['old'] = $data;
+            // set('old',$data);
+            // Sessions::get('old');
+            // Sessions::get();
+            Sessions::set('old',$data); // if we want to keep old data just if validation fails
+            // dd($_SESSION);
+            // dd($data);
+            // dd($_SESSION);
             redirect("user/5");
+            // unset($_SESSION['old']);
         }
+        // unset($_SESSION['old']);
+        // Sessions::destroy('old'); 
+        // dd($_SESSION);
         dd("Valid");
         // $result = DB::table("admins")->select("email")->orderBy("id","DESC")->get();
         // $result = DB::table("admins")->select()->find(6);
