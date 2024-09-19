@@ -49,3 +49,14 @@ function old($key) {
     $formOldData = Sessions::get('form_old_data');
     echo isset($formOldData[$key]) ? $formOldData[$key]:'';
 }
+
+function links(){
+    $pagination = Sessions::get("pagination");
+    ?>
+    <div class="pagination">
+        <?php for($i=1;$i<=$pagination['number_of_pages'];$i++):?>
+            <a class="<?php __($pagination['active_page'] == $i ? "active":""); ?>" href="?page=<?php __($i);?>"><?php __($i);?></a>
+        <?php endfor;?>
+    </div>
+    <?php
+}

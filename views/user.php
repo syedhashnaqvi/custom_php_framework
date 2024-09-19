@@ -18,3 +18,20 @@ $errors = \Core\Sessions::messages("errors");
     <input type="password" name="password" placeholder="password" value=<?php old('password') ?>>
     <input type="submit" value="Save">
 </form>
+
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>name</th>
+        <th>Email</th>
+    </tr>
+    <?php foreach($users as $user):?>
+        <tr>
+            <td><?php __($user->id);?></td>
+            <td><?php __($user->username);?></td>
+            <td><?php __($user->email);?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<?php links(); ?>

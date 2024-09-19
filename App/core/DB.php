@@ -2,6 +2,7 @@
 namespace Core;
 use mysqli;
 use Core\Config;
+use Core\Sessions;
 class DB {
     private static $obj;
     private $connection,$query;
@@ -38,17 +39,15 @@ class DB {
         return $this;
     }
 
-    public function get($limit=null){
+    public function get($limit=null,$offset=0){
         if($limit && is_int($limit)){
-            $this->query.=" limit $limit";
+            $this->query.=" limit $limit offset $offset";
         }
         $result = $this->connection->query($this->query);
         if(!$result){
             die("Query: ".$this->query."<br>Database Error: ".$this->connection->error);
         }
-        if($result->num_rows==1){
-            return (object)$result->fetch_assoc();
-        }else if($result->num_rows>1){
+        if($result->num_rows>0){
             $data = [];
             while($row = $result->fetch_assoc()){
                 $data[] = (object)$row;
@@ -57,6 +56,22 @@ class DB {
         }else{
             return null;
         }
+    }
+
+    public function paginate($perPageLimit){
+        $totalRecords = count($this->get());
+        $totalPages = ceil($totalRecords/$perPageLimit);
+        $activePage = 1;
+        if(isset($_GET["page"]) && !empty($_GET["page"])){
+            $activePage = $_GET["page"];
+        }
+        $pagination = [
+            "number_of_pages" => $totalPages,
+            "active_page" => $activePage,
+        ];
+        Sessions::set("pagination",$pagination);
+        $offset = ($activePage-1)*$perPageLimit;
+        return $this->get($perPageLimit,$offset);
     }
 
     public function first(){
