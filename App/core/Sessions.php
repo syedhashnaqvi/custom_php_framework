@@ -70,4 +70,13 @@ class Sessions {
     public static function setMessages($msg) {
         self::set("messages",$msg);
     }
+
+    public static function errors($key = null) {
+        $result = self::get("errors");
+        self::destroy("errors");
+        return $key ? (isset($result[$key]) ? $result[$key] : null):$result;
+    }
+    public static function setErrors($msg) {
+        self::set("errors",$msg);
+    }
 }

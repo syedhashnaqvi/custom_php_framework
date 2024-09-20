@@ -43,6 +43,7 @@ function url($path=''){
 function redirect($path){
     $url = url("/".$path);
     header('Location:'.$url);
+    exit;
 }
 
 function old($key) {

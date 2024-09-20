@@ -20,7 +20,7 @@ class Validator{
                 if(!$isValid) break;
             }
         }
-        Sessions::setMessages(["errors"=>self::$errors]);
+        Sessions::setErrors(["errors"=>self::$errors]);
         return count(self::$errors)>0 ? false : true;
     }
 

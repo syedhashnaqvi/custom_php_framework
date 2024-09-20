@@ -25,7 +25,9 @@ class Router{
                     $controller = new $controller();
                     $reflectionMethod = new ReflectionMethod($controller,$method);
                     $parameters = $reflectionMethod->getParameters();
-                    if(count($parameters)>1){
+                    if(count($parameters)==1 && $parameters[0]->name == "request"){
+                        $controller->$method($request);
+                    }else if(count($parameters)>1){
                         $controller->$method($request,...$matches);
                     }else{
                         $controller->$method(...$matches);

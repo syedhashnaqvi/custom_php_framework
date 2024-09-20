@@ -9,7 +9,7 @@ class UserController{
         $template->set("user_id",$id);
         $template->set("details","Showing details of user with id $id");
         // $users = DB::table("users")->select()->get();
-        $users = DB::table("users")->select()->orderBy("id","ASC")->paginate(2);
+        $users = DB::table("users")->select()->orderBy("id","ASC")->paginate(4);
         $template->set("users",$users);
         $template->render('user');
     }

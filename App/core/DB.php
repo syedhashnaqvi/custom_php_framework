@@ -104,7 +104,7 @@ class DB {
     }
 
     public function where2($col,$value){
-        $this->query.=" WHERE $col = $value";
+        $this->query.=" WHERE $col = '$value'";
         return $this;
     }
 
