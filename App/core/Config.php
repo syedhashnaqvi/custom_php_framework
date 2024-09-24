@@ -16,7 +16,7 @@ class Config{
 
     private static function loadConfigFile($fileName){
         if(!isset(self::$config[$fileName])){
-            self::$config = require_once(self::$configDir.$fileName.'.php');
+            self::$config = include(self::$configDir.$fileName.'.php');
         }
     }
 }
