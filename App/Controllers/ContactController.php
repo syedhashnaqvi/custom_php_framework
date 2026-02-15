@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Controllers;
+
+use Template;
+
 class ContactController {
     public function index(){
         $template = new Template();

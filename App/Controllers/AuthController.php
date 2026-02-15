@@ -1,9 +1,14 @@
 <?php
+
+namespace App\Controllers;
+
 use Core\Validator;
 use Core\Hash;
 use Core\DB;
 use Core\Sessions;
 use Core\Auth;
+use Template;
+
 class AuthController {
     public function register(){
         $template = new Template();

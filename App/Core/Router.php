@@ -1,10 +1,16 @@
 <?php
+declare(strict_types=1);
+
 namespace Core;
+
 use Core\Request;
+use Core\Container;
 use ReflectionMethod;
+
 class Router{
     
-    private $requestUri,$requestMethod;
+    private string $requestUri;
+    private string $requestMethod;
 
     public function __construct(){
         include __DIR__."/../../routes.php";
@@ -19,10 +25,10 @@ class Router{
                 if(preg_match($routePattern,$this->requestUri,$matches)){
                     array_shift($matches);
                     $action = explode("@",$action);
-                    $controller = $action[0];
+                    $controllerName = "App\\Controllers\\" . $action[0];
                     $method = $action[1];
-                    include __DIR__."/../controllers/$controller.php";
-                    $controller = new $controller();
+                    $container = new Container();
+                    $controller = $container->get($controllerName);
                     $reflectionMethod = new ReflectionMethod($controller,$method);
                     $parameters = $reflectionMethod->getParameters();
                     if(count($parameters)==1 && $parameters[0]->name == "request"){
@@ -45,12 +51,12 @@ class Router{
         }
     }
 
-    private function methodNotAllowed(){
+    private function methodNotAllowed(): void{
         http_response_code(405);
         die("405 $this->requestMethod Method not allowed");
     }
 
-    private function routeNotFound(){
+    private function routeNotFound(): void{
         http_response_code(404);
         die("404 NOT FOUND!");
     }
