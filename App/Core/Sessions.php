@@ -16,7 +16,6 @@ class Sessions {
 
     public static function set($key,$value){
         self::init();
-        // if(isset($_SESSION[$key])) return;
         $_SESSION[$key] = $value;
     }
 

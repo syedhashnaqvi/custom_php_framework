@@ -14,7 +14,6 @@ $errors = \Core\Sessions::messages("errors");
         <input type="text" name="email" placeholder="email" value=<?php old('email') ?>><br>
         <?php _print($errors,"email"); ?>
     </label><br><br>
-   
     <input type="password" name="password" placeholder="password" value=<?php old('password') ?>>
     <input type="submit" value="Save">
 </form>

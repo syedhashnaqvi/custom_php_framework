@@ -1,6 +1,6 @@
 <?php
 use Core\Sessions;
-// Dump & Die function
+
 function dd(...$vars){
     echo "<pre style='background:#000000;color:#00FF00;font-size:16px;'>";
     foreach ($vars as $var) {
@@ -11,7 +11,6 @@ function dd(...$vars){
     die();
 }
 
-// Dump data
 function dump(...$vars){
     echo "<pre style='background:#000000;color:#00FF00;font-size:16px;'>";
     foreach ($vars as $var) {
@@ -21,7 +20,6 @@ function dump(...$vars){
     echo "</pre>";
 }
 
-// for output
 function __(...$vars){
     foreach ($vars as $var) {
         echo $var;
@@ -34,9 +32,9 @@ function _print($arr,$key){
 
 function url($path=''){
     return sprintf(
-      "%s://%s",
-      isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
-      $_SERVER['HTTP_HOST'].$path
+        "%s://%s",
+        isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+        $_SERVER['HTTP_HOST'].$path
     );
 }
 

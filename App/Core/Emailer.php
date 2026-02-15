@@ -22,7 +22,6 @@ class Emailer {
             $mail->SMTPSecure = Config::get("mail.encryption");           
             $mail->Port       = Config::get("mail.port");                                 
 
-            //Recipients
             $mail->setFrom(Config::get("mail.from_email"), Config::get("mail.from_name"));
             if(is_array($to)){
                 foreach ($to as $key => $email) {
@@ -36,10 +35,8 @@ class Emailer {
                 $mail->addAddress($to);     
             }
 
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->isHTML(true);                                  
             $mail->Subject = $subject;
-            // $mail->Body = $message;
             $body = '';
             if($type == "text"){
                 $body = $message;

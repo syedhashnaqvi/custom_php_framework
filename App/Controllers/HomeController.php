@@ -1,5 +1,10 @@
 <?php
+
+namespace App\Controllers;
+
 use Core\Sessions;
+use Template;
+
 class HomeController {
     public function index(){
         $template = new Template();

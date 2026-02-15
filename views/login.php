@@ -1,8 +1,6 @@
 <?php
     $errors = \Core\Sessions::errors("errors");
-    // $success_msg = \Core\Sessions::messages("success");
     $error_msg = \Core\Sessions::messages("error");
-    // echo $success_msg;
     echo $error_msg;
 ?>
 

@@ -40,19 +40,3 @@ class Validator{
         return true;
     }
 }
-
-
-/*========*/
-// Hayat
-/*========*/
-// 1. Number 
-// 2. Min
-// 3. Max
-
-
-/*========*/
-// Hassan
-/*========*/
-// 1. Password with confirm Password 
-// 2. Pasword length
-// 3. Special Chars, Upper case
