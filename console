@@ -1,0 +1,90 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Core\DB;
+
+$command = $argv[1] ?? null;
+
+if (!$command) {
+    echo "Usage: php console <command>\n";
+    echo "Available commands:\n";
+    echo "  make:migration <name>  Create a new migration file\n";
+    echo "  migrate                Run pending migrations\n";
+    exit(1);
+}
+
+switch ($command) {
+    case 'make:migration':
+        $name = $argv[2] ?? null;
+        if (!$name) {
+            echo "Error: Migration name required.\nUsage: php console make:migration <name>\n";
+            exit(1);
+        }
+        
+        $timestamp = date('Y_m_d_His');
+        $fileName = "{$timestamp}_{$name}.php";
+        $className = str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
+        
+        $content = "<?php\n\nuse Core\Migration;\n\nclass {$className} extends Migration {\n    public function up() {\n\n    }\n\n    public function down() {\n\n    }\n}\n";
+        
+        file_put_contents(__DIR__ . "/migrations/{$fileName}", $content);
+        echo "Created migration: migrations/{$fileName}\n";
+        break;
+
+    case 'migrate':
+        echo "Running migrations...\n";
+        
+        $db = new DB();
+        
+        $db->query("CREATE TABLE IF NOT EXISTS migrations (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            migration VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )")->execute();
+        
+        $runMigrations = [];
+        $result = $db->query("SELECT migration FROM migrations")->get();
+        if ($result) {
+            foreach ($result as $row) {
+                $runMigrations[] = $row->migration;
+            }
+        }
+        
+        $files = scandir(__DIR__ . '/migrations');
+        $toRun = [];
+        
+        foreach ($files as $file) {
+            if ($file === '.' || $file === '..') continue;
+            if (in_array($file, $runMigrations)) continue;
+            $toRun[] = $file;
+        }
+        
+        if (empty($toRun)) {
+            echo "Nothing to migrate.\n";
+            exit(0);
+        }
+        
+        foreach ($toRun as $file) {
+            echo "Migrating: $file\n";
+            require_once __DIR__ . "/migrations/$file";
+            
+            $content = file_get_contents(__DIR__ . "/migrations/$file");
+            if (preg_match('/class\s+(\w+)\s+extends\s+Migration/', $content, $matches)) {
+                $className = $matches[1];
+                $migration = new $className();
+                $migration->up();
+                
+                $db->query("INSERT INTO migrations (migration) VALUES ('$file')")->execute();
+                echo "Migrated:  $file\n";
+            } else {
+                echo "Error: Could not find class in $file\n";
+            }
+        }
+        break;
+
+    default:
+        echo "Unknown command: $command\n";
+        exit(1);
+}

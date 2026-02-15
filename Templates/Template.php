@@ -1,5 +1,7 @@
 <?php
 
+namespace Templates;
+
 class Template {
     protected $variables = [];
 
@@ -7,10 +9,14 @@ class Template {
         $this->variables[$name] = $value;
     }
 
-    public function render($view){
+    public function render($view, $useLayout = true){
         extract($this->variables);
-        include __DIR__.'/../views/partials/header.php';
+        if ($useLayout) {
+            include __DIR__.'/../views/partials/header.php';
+        }
         include __DIR__."/../views/$view.php";
-        include __DIR__.'/../views/partials/footer.php';
+        if ($useLayout) {
+            include __DIR__.'/../views/partials/footer.php';
+        }
     }
 }
